@@ -7,11 +7,9 @@ filenames = ['../Split/Female.csv', '../Split/Male.csv']
 
 filenames.each do |filename|
 
-  csv = CSV.parse(File.read('../Split/Male.csv'), {:headers => true})
-
   normalised_sla = {}
 
-  CSV.foreach('../Split/Male.csv', :headers => true) do |row|
+  CSV.foreach(filename, :headers => true) do |row|
     # Make sure the year exists.
     year = normalised_sla[row[0].to_i]
     year = {} if !year
