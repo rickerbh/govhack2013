@@ -6,7 +6,7 @@ require 'json'
 filenames = ['../Split/Female.csv', '../Split/Male.csv']
 
 # Sourced from http://en.wikipedia.org/wiki/Local_government_areas_of_Victoria
-# The Greater Metro - * mappings are our own... :-(
+# The "Greater Metro - *" mappings are our own... :-(
 areaMapping = {}
 areaMapping["Melbourne"] = "Inner Melbourne"
 areaMapping["Port Phillip"] = "Inner Melbourne"

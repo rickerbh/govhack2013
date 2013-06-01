@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:victoriaFuture.xcodeproj">
+      location = "self:futureMelbourne.xcodeproj">
    </FileRef>
 </Workspace>
