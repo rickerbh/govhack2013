@@ -30,22 +30,22 @@ public:
 
   float resonance;
   float cutOff;
+  float numberOfInputs;
   
   ofxTimer timer;
   
   ofxAudioUnit compressor;
-  ofxAudioUnit timePitch;
-  ofxAudioUnit distortion;
-  ofxAudioUnit filter;
-  
-  ofxAudioUnitFilePlayer source1, source2, source3, source4, source5;
+  ofxAudioUnit p1, p2, p3, p4, p5, p6;
+  ofxAudioUnit lp1, lp2, lp3, lp4, lp5, lp6;
+
+  ofxAudioUnitFilePlayer s1, s2, s3, s4, s5, s6;
 	ofxAudioUnitMixer mixer;
 	ofxAudioUnitOutput output;
 	
-	ofxAudioUnitTap tap1, tap2, tap3, tap4, tap5;
-	ofPolyline wave1, wave2, wave3, wave4, wave5;
+	ofxAudioUnitTap tap1, tap2, tap3, tap4, tap5, tap6;
+	ofPolyline wave1, wave2, wave3, wave4, wave5, wave6;
 
-  ofxJSONElement json;
+  ofxJSONElement jsonF, jsonM;
   
 };
 

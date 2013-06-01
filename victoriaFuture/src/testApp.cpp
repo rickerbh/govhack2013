@@ -3,37 +3,60 @@
 //--------------------------------------------------------------
 void testApp::setup(){
   
-  json.open("Female.json");
+  jsonF.open("Female.json");
+  jsonM.open("Male.json");
   
-  ofxJSONElement d2007 = json["2013"]["Ballarat"];
+//  ofxJSONElement d2007 = json["2013"]["Ballarat"];
 //  cout << d2007.getRawString(true);
 
   
-	source1.setFile(ofFilePath::getAbsolutePath("81804__bennstir__violin-loop1.wav"));
-	source2.setFile(ofFilePath::getAbsolutePath("153610__carlos-vaquero__violin-g-4-tenuto-vibrato.wav"));
-	source3.setFile(ofFilePath::getAbsolutePath("23580__loofa__gong1.aif"));
-	source4.setFile(ofFilePath::getAbsolutePath("174725__archeos__bell-sound-b.wav"));
-	source5.setFile(ofFilePath::getAbsolutePath("85579__drriquet__electro-beat.wav"));
+	s1.setFile(ofFilePath::getAbsolutePath("81804__bennstir__violin-loop1.wav"));
+	s2.setFile(ofFilePath::getAbsolutePath("153610__carlos-vaquero__violin-g-4-tenuto-vibrato.wav"));
+	s3.setFile(ofFilePath::getAbsolutePath("23580__loofa__gong1.aif"));
+	s4.setFile(ofFilePath::getAbsolutePath("174725__archeos__bell-sound-b.wav"));
+	s5.setFile(ofFilePath::getAbsolutePath("85579__drriquet__electro-beat.wav"));
+  s6.setFile(ofFilePath::getAbsolutePath("154230__carlos-vaquero__transverse-flute-g-4-tenuto-non-vibrato.wav"));
   
-  distortion = ofxAudioUnit(kAudioUnitType_Effect,
-                            kAudioUnitSubType_Distortion);
-  filter = ofxAudioUnit(kAudioUnitType_Effect,
+  lp1 = ofxAudioUnit(kAudioUnitType_Effect,
                         kAudioUnitSubType_LowPassFilter);
-  timePitch = ofxAudioUnit(kAudioUnitType_Effect,
-                           kAudioUnitSubType_TimePitch);
+  lp2 = ofxAudioUnit(kAudioUnitType_Effect,
+                     kAudioUnitSubType_LowPassFilter);
+  lp3 = ofxAudioUnit(kAudioUnitType_Effect,
+                     kAudioUnitSubType_LowPassFilter);
+  lp4 = ofxAudioUnit(kAudioUnitType_Effect,
+                     kAudioUnitSubType_LowPassFilter);
+  lp5 = ofxAudioUnit(kAudioUnitType_Effect,
+                     kAudioUnitSubType_LowPassFilter);
+  lp6 = ofxAudioUnit(kAudioUnitType_Effect,
+                     kAudioUnitSubType_LowPassFilter);
   
-  source1.connectTo(filter).connectTo(tap1);
-  source2.connectTo(timePitch).connectTo(distortion).connectTo(tap2);
-  source3.connectTo(tap3);
-  source4.connectTo(tap4);
-  source5.connectTo(tap5);
+  p1 = ofxAudioUnit(kAudioUnitType_Effect,
+                           kAudioUnitSubType_TimePitch);  
+  p2 = ofxAudioUnit(kAudioUnitType_Effect,
+                    kAudioUnitSubType_TimePitch);
+  p3 = ofxAudioUnit(kAudioUnitType_Effect,
+                    kAudioUnitSubType_TimePitch);
+  p4 = ofxAudioUnit(kAudioUnitType_Effect,
+                    kAudioUnitSubType_TimePitch);
+  p5 = ofxAudioUnit(kAudioUnitType_Effect,
+                    kAudioUnitSubType_TimePitch);
+  p6 = ofxAudioUnit(kAudioUnitType_Effect,
+                    kAudioUnitSubType_TimePitch);
   
-	mixer.setInputBusCount(5);
+  s1.connectTo(lp1).connectTo(p1).connectTo(tap1);
+  s2.connectTo(lp2).connectTo(p2).connectTo(tap2);
+  s3.connectTo(lp3).connectTo(p3).connectTo(tap3);
+  s4.connectTo(lp4).connectTo(p4).connectTo(tap4);
+  s5.connectTo(lp5).connectTo(p5).connectTo(tap5);
+  s6.connectTo(lp6).connectTo(p6).connectTo(tap6);
+  
+	mixer.setInputBusCount(6);
 	tap1.connectTo(mixer, 0);
   tap2.connectTo(mixer, 1);
   tap3.connectTo(mixer, 2);
   tap4.connectTo(mixer, 3);
   tap5.connectTo(mixer, 4);
+  tap6.connectTo(mixer, 5);
   
 	compressor = ofxAudioUnit(kAudioUnitType_Effect,
                             kAudioUnitSubType_DynamicsProcessor);
@@ -45,11 +68,12 @@ void testApp::setup(){
   
   output.start();
   
-  source1.loop();
-  source2.loop();
-  source3.loop();
-  source4.loop();
-  source5.loop();
+  s1.loop();
+  s2.loop();
+  s3.loop();
+  s4.loop();
+  s5.loop();
+  s6.loop();
 	
 	ofSetVerticalSync(true);
   
@@ -63,48 +87,51 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	tap1.getLeftWaveform(wave1, ofGetWidth(), ofGetHeight()/5);
-	tap2.getLeftWaveform(wave2, ofGetWidth(), ofGetHeight()/5);
-	tap3.getLeftWaveform(wave3, ofGetWidth(), ofGetHeight()/5);
-	tap4.getLeftWaveform(wave4, ofGetWidth(), ofGetHeight()/5);
-	tap5.getLeftWaveform(wave5, ofGetWidth(), ofGetHeight()/5);
+	tap1.getLeftWaveform(wave1, ofGetWidth(), ofGetHeight() / 6);
+	tap2.getLeftWaveform(wave2, ofGetWidth(), ofGetHeight() / 6);
+	tap3.getLeftWaveform(wave3, ofGetWidth(), ofGetHeight() / 6);
+	tap4.getLeftWaveform(wave4, ofGetWidth(), ofGetHeight() / 6);
+	tap5.getLeftWaveform(wave5, ofGetWidth(), ofGetHeight() / 6);
+	tap6.getLeftWaveform(wave6, ofGetWidth(), ofGetHeight() / 6);
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
 	ofBackground(0);
 	ofSetColor(255);
+  ofSetLineWidth(2.0);
 	ofPushMatrix();
 	{
+    //		ofDrawBitmapString("Press 'f' for filter UI", 20, 20);
 		ofSetColor(0x65, 0xb4, 0xad);
 		wave1.draw();
 		ofSetColor(255);
-//		ofDrawBitmapString("Press 'f' for filter UI", 20, 20);
     
-    ofTranslate(0, ofGetHeight() / 5);
+    ofTranslate(0, ofGetHeight() / 6);
 		ofSetColor(0x91, 0xc3, 0xae);
 		wave2.draw();
 		ofSetColor(255);
-//		ofDrawBitmapString("Press 'd' for distortion UI", 20, 20);
-//		ofDrawBitmapString("Press 't' for timepitch UI", 20, 40);
 
-    ofTranslate(0, ofGetHeight() / 5);
+    ofTranslate(0, ofGetHeight() / 6);
 		ofSetColor(0xdb, 0xd5, 0xa9);
 		wave3.draw();
 		ofSetColor(255);
 
-    ofTranslate(0, ofGetHeight() / 5);
+    ofTranslate(0, ofGetHeight() / 6);
 		ofSetColor(0xf1, 0xa5, 0xa2);
 		wave4.draw();
 		ofSetColor(255);
 
-    ofTranslate(0, ofGetHeight() / 5);
+    ofTranslate(0, ofGetHeight() / 6);
 		ofSetColor(0xea, 0x5b, 0xa6);
 		wave5.draw();
 		ofSetColor(255);
 
-	
-  
+    ofTranslate(0, ofGetHeight() / 6);
+		ofSetColor(0xb0, 0xd4, 0xb0);
+		wave6.draw();
+		ofSetColor(255);
+
   }
 	ofPopMatrix();
   
@@ -112,9 +139,18 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-	if(key == 'd') distortion.showUI();
-	if(key == 'f') filter.showUI();
-	if(key == 't') timePitch.showUI();
+	if(key == '1') lp1.showUI();
+	if(key == '\'') p1.showUI();
+	if(key == '2') lp2.showUI();
+	if(key == ',') p2.showUI();
+	if(key == '3') lp3.showUI();
+	if(key == '.') p3.showUI();
+	if(key == '4') lp4.showUI();
+	if(key == 'p') p4.showUI();
+	if(key == '5') lp5.showUI();
+	if(key == 'y') p5.showUI();
+	if(key == '6') lp6.showUI();
+	if(key == 'f') p6.showUI();
 }
 
 //--------------------------------------------------------------
@@ -165,7 +201,7 @@ void testApp::timerFired(ofEventArgs &e) {
     resonance = 40.f;
   }
   printf("Setting resonance to %f\n", resonance);
-  filter.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, resonance);
+//  filter.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, resonance);
   
   if (cutOff > 10.f) {
     cutOff = cutOff * 0.8f;
@@ -173,6 +209,6 @@ void testApp::timerFired(ofEventArgs &e) {
     cutOff = 10.f;
   }
   printf("Setting cutoff to %f\n", cutOff);
-  filter.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, cutOff);
+//  filter.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, cutOff);
 
 }
