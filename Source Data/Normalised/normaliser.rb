@@ -26,21 +26,51 @@ filenames.each do |filename|
 
     # loop through all the age groups and add populations together
     age_headers.each do |age|
-      population = sla[age]
-      population = 0 if !population
       age_i = age.to_i
+      population = sla[age_i]
+      population = 0 if !population
       row_idx = age_i + 3
-      population += row[row_idx].to_i
-      sla[age] = population
+      population += row[row_idx].to_f
+      sla[age_i] = population
     end
 
     year[sla_name] = sla
     normalised_sla[row[0].to_i] = year
   end
 
+  u_normalised = {}
+  normalised_sla.each do |year, slas|
+    u_slas = {}
+    slas.each do |sla, ages| 
+      max = 0.0
+      min = 999999999.0
+      # get min/max
+      ages.each do |age, population| 
+        max = population if population > max
+        min = population if population < min
+      end
+
+      difference = max - min
+      u_ages = {}
+      # normalise population numbers
+      ages.each do |age, population|
+        # guard aganist a divide by 0
+        if (difference == 0)
+          u_ages[age] = 0
+        else
+          u_ages[age] = (population - min) / difference
+        end
+      end
+      u_slas[sla] = u_ages
+    end
+    if (year >= 2013) 
+      u_normalised[year] = u_slas
+    end
+  end
+  
   output_file = filename.split('/').last.split('.csv').last + '.json'
   File.open(output_file,"w") do |f|
-    f.write(normalised_sla.to_json)
+    f.write(u_normalised.to_json)
   end
 
   puts "Converted and wrote #{output_file}"
