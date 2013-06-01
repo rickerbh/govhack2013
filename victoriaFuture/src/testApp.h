@@ -31,6 +31,9 @@ public:
   float resonance;
   float cutOff;
   float numberOfInputs;
+
+  int year;
+  int age;
   
   ofxTimer timer;
   

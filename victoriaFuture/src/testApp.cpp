@@ -5,10 +5,8 @@ void testApp::setup(){
   
   jsonF.open("Female.json");
   jsonM.open("Male.json");
-  
-//  ofxJSONElement d2007 = json["2013"]["Ballarat"];
-//  cout << d2007.getRawString(true);
-
+  year = 2013;
+  age = 0;
   
 	s1.setFile(ofFilePath::getAbsolutePath("81804__bennstir__violin-loop1.wav"));
 	s2.setFile(ofFilePath::getAbsolutePath("153610__carlos-vaquero__violin-g-4-tenuto-vibrato.wav"));
@@ -78,10 +76,8 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
   
   timer = ofxTimer();
-  timer.setup(2000, true);
+  timer.setup(1000, true);
   
-  resonance = 1.f;
-  cutOff = 6900.f;
   ofAddListener(timer.TIMER_REACHED, this, &testApp::timerFired);
 }
 
@@ -194,7 +190,56 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void testApp::timerFired(ofEventArgs &e) {
+  if (age >= 85) {
+    age = 0;
+    year += 1;
+  }
+  
+  cout << "Year: " << year << " Age: " << age << endl;
+  
+  float rm1 = jsonM[ofToString(year)]["Inner Melbourne"][ofToString(age)].asDouble();
+  float rm2 = jsonM[ofToString(year)]["Metropolitan"][ofToString(age)].asDouble();
+  float rm3 = jsonM[ofToString(year)]["Greater Metropolitan - North"][ofToString(age)].asDouble();
+  float rm4 = jsonM[ofToString(year)]["Greater Metropolitan - South"][ofToString(age)].asDouble();
+  float rm5 = jsonM[ofToString(year)]["Greater Metropolitan - East"][ofToString(age)].asDouble();
+  float rm6 = jsonM[ofToString(year)]["Greater Metropolitan - West"][ofToString(age)].asDouble();
+
+  float rf1 = jsonF[ofToString(year)]["Inner Melbourne"][ofToString(age)].asDouble();
+  float rf2 = jsonF[ofToString(year)]["Metropolitan"][ofToString(age)].asDouble();
+  float rf3 = jsonF[ofToString(year)]["Greater Metropolitan - North"][ofToString(age)].asDouble();
+  float rf4 = jsonF[ofToString(year)]["Greater Metropolitan - South"][ofToString(age)].asDouble();
+  float rf5 = jsonF[ofToString(year)]["Greater Metropolitan - East"][ofToString(age)].asDouble();
+  float rf6 = jsonF[ofToString(year)]["Greater Metropolitan - West"][ofToString(age)].asDouble();
+
+  age += 1;
+  
+  //  ofxJSONElement d2007 = json["2013"]["Ballarat"];
+  //  cout << d2007.getRawString(true);
+
+  float resonance_max = 40.f;
+  float frequency_min = 192;
+  float frequency_periods_max = 7; // max frequency is 21830, so that's 7 exponential growth periods from 192
+
+  lp1.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm1 * resonance_max);
+  lp2.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm2 * resonance_max);
+  lp3.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm3 * resonance_max);
+  lp4.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm4 * resonance_max);
+  lp5.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm5 * resonance_max);
+  lp6.setParameter(kLowPassParam_Resonance, kAudioUnitScope_Global, rm6 * resonance_max);
+
+  cout << "lp1 cutoff from " << rf1 << " - " << 192 * (pow(2, frequency_periods_max * rf1) - 1) << endl;
+
+  lp1.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf1) - 1));
+  lp2.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf2) - 1));
+  lp3.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf3) - 1));
+  lp4.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf4) - 1));
+  lp5.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf5) - 1));
+  lp6.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, frequency_min * (pow(2, frequency_periods_max * rf6) - 1));
+
+  
+  
   return;
+
   if (resonance < 38.f) {
     resonance += 1.f;
   } else {
@@ -209,6 +254,6 @@ void testApp::timerFired(ofEventArgs &e) {
     cutOff = 10.f;
   }
   printf("Setting cutoff to %f\n", cutOff);
-//  filter.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, cutOff);
+//filter.setParameter(kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, cutOff);
 
 }
