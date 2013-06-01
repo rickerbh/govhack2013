@@ -5,6 +5,41 @@ require 'json'
 
 filenames = ['../Split/Female.csv', '../Split/Male.csv']
 
+# Sourced from http://en.wikipedia.org/wiki/Local_government_areas_of_Victoria
+# The Greater Metro - * mappings are our own... :-(
+areaMapping = {}
+areaMapping["Melbourne"] = "Inner Melbourne"
+areaMapping["Port Phillip"] = "Inner Melbourne"
+areaMapping["Stonnington"] = "Inner Melbourne"
+areaMapping["Yarra"] = "Inner Melbourne"
+areaMapping["Banyule"] = "Metropolitan"
+areaMapping["Bayside"] = "Metropolitan"
+areaMapping["Boroondara"] = "Metropolitan"
+areaMapping["Brimbank"] = "Metropolitan"
+areaMapping["Darebin"] = "Metropolitan"
+areaMapping["Glen Eira"] = "Metropolitan"
+areaMapping["Hobsons Bay"] = "Metropolitan"
+areaMapping["Kingston"] = "Metropolitan"
+areaMapping["Manningham"] = "Metropolitan"
+areaMapping["Maribyrnong"] = "Metropolitan"
+areaMapping["Monash"] = "Metropolitan"
+areaMapping["Moonee Valley"] = "Metropolitan"
+areaMapping["Moreland"] = "Metropolitan"
+areaMapping["Whitehorse"] = "Metropolitan"
+areaMapping["Cardinia"] = "Greater Metropolitan - East"
+areaMapping["Casey"] = "Greater Metropolitan - East"
+areaMapping["Frankston"] = "Greater Metropolitan - South"
+areaMapping["Gr. Dandenong"] = "Greater Metropolitan - South"
+areaMapping["Hume"] = "Greater Metropolitan - North"
+areaMapping["Knox"] = "Greater Metropolitan - East"
+areaMapping["Maroondah"] = "Greater Metropolitan - East"
+areaMapping["Melton"] = "Greater Metropolitan - West"
+areaMapping["Mornington P`sula"] = "Greater Metropolitan - South"
+areaMapping["Nillumbik"] = "Greater Metropolitan - North"
+areaMapping["Whittlesea"] = "Greater Metropolitan - North"
+areaMapping["Wyndham"] = "Greater Metropolitan - West"
+areaMapping["Yarra Ranges"] = "Greater Metropolitan - East"
+
 filenames.each do |filename|
 
   normalised_sla = {}
@@ -16,6 +51,10 @@ filenames.each do |filename|
 
     # Normalise the SLA name down to the major SLA entity
     sla_name = row[2].gsub(/_/, " ").split('-')[0].split('(')[0].strip
+    # map sla name to "region"
+    sla_name = areaMapping[sla_name]
+    # if there is no sla_name (ie, no mapping, ie rural victoria), next please.
+    next if !sla_name
 
     # Make sure the SLA exists
     sla = year[sla_name]
