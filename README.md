@@ -18,7 +18,7 @@ Data Source
 
 We are using the Victorian data set for [Statistical Local Area Population Projections, 2007 to 2027, Revised](http://www.health.gov.au/internet/main/publishing.nsf/Content/BDE33326FE4D5460CA2576BD00833800?OpenDocument&SUBMITCHECK=on&SUBMIT=View+documents) from [health.gov.au](http://www.health.gov.au).
 
-The source is being split into female/male data sets, and normalised on "major" SLA name. Check the [Source Data](https://github.com/rickerbh/govhack2013/tree/master/Source%20Data) directory for this.
+The source is being split into female/male data sets, and normalised between 0-1 based on region within Melbourne (Inner, Metro, Greater [North, South, East, West]). Check the [Source Data](https://github.com/rickerbh/govhack2013/tree/master/Source%20Data) directory for this. ruby scrips that perform this task are in the `Source Data/Normalised/` directory.
 
 Installation
 ------------
@@ -46,8 +46,23 @@ Results
 
 Aural pleasure. Maybe. Might just be noise.
 
+Audio Help
+----------
+
+The way this app works is that it modifies the resonance and cutoff frequency for a low-pass filter, and alters volume of each sample independently.
+
+- [Low-pass Filter](http://en.wikipedia.org/wiki/Low-pass_filter)
+
 Licence
 -------
+
+All audio samples from [freesound.org](http://www.freesound.org), under Creative Commons Licence.
+- [http://www.freesound.org/people/ani_music/sounds/165314/](http://www.freesound.org/people/ani_music/sounds/165314/)
+- <insert URLs here>
+- <insert URLs here>
+- <insert URLs here>
+- <insert URLs here>
+- <insert URLs here>
 
 [![Creative Commons Licence][1]][2]  
 This work is licensed under a [Creative Commons Attribution 2.5 Australia License][2]. 

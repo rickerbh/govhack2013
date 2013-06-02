@@ -35,10 +35,11 @@ public:
   int year;
   int age;
   
+  int titleWidth;
+  
   ofxTimer timer;
   
   ofxAudioUnit compressor;
-  ofxAudioUnit p1, p2, p3, p4, p5, p6;
   ofxAudioUnit lp1, lp2, lp3, lp4, lp5, lp6;
   
   ofxAudioUnitFilePlayer s1, s2, s3, s4, s5, s6;
@@ -48,7 +49,9 @@ public:
   ofxAudioUnitTap tap1, tap2, tap3, tap4, tap5, tap6;
   ofPolyline wave1, wave2, wave3, wave4, wave5, wave6;
   
-  ofxJSONElement jsonF, jsonM;
+  ofxJSONElement jsonF, jsonM, jsonA;
+  
+  ofTrueTypeFont roboto;
   
 };
 
