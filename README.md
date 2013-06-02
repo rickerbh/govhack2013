@@ -23,6 +23,8 @@ The source is being split into female/male data sets, and normalised between 0-1
 Installation
 ------------
 
+You can extract and run the compiled application from the `futureMelbourne/bin/futureMelbourneApp.zip` file, or follow the instructions below to compile it yourself.
+
 You'll need [Xcode](https://itunes.apple.com/en/app/xcode/id497799835?mt=12). 
 
 The main project is [openFrameworks](http://www.openframeworks.cc) based. To compile it, you'll need to install [openFrameworks](http://www.openframeworks.cc/download/) for your platform. Just download and install.
