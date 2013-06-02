@@ -23,7 +23,7 @@ The source is being split into female/male data sets, and normalised between 0-1
 Installation
 ------------
 
-You can extract and run the compiled application from the `futureMelbourne/bin/futureMelbourneApp.zip` file, or follow the instructions below to compile it yourself.
+You can extract and run the compiled application from the `futureMelbourne/bin/futureMelbourneApp.zip` file (it must be extracted to the location it's stored in, and run from that location), or follow the instructions below to compile it yourself.
 
 You'll need [Xcode](https://itunes.apple.com/en/app/xcode/id497799835?mt=12). 
 
@@ -59,12 +59,12 @@ Licence
 -------
 
 All audio samples from [freesound.org](http://www.freesound.org), under Creative Commons Licence.
-- [http://www.freesound.org/people/ani_music/sounds/165314/](http://www.freesound.org/people/ani_music/sounds/165314/)
-- <insert URLs here>
-- <insert URLs here>
-- <insert URLs here>
-- <insert URLs here>
-- <insert URLs here>
+- [http://www.freesound.org/people/loofa/sounds/23580/](http://www.freesound.org/people/loofa/sounds/23580/)
+- [http://www.freesound.org/people/bennstir/sounds/81804/](http://www.freesound.org/people/bennstir/sounds/81804/)
+- [http://www.freesound.org/people/drriquet/sounds/85579/](http://www.freesound.org/people/drriquet/sounds/85579/)
+- [http://www.freesound.org/people/carlos-vaquero/sounds/153610/](http://www.freesound.org/carlos-vaquero/sounds/153610/)
+- [http://www.freesound.org/people/carlos-vaquero/sounds/154230/](http://www.freesound.org/people/carlos-vaquero/sounds/154230/)
+- [http://www.freesound.org/people/archeos/sounds/174725/](http://www.freesound.org/people/archeos/sounds/174725/)
 
 [![Creative Commons Licence][1]][2]  
 This work is licensed under a [Creative Commons Attribution 2.5 Australia License][2]. 
