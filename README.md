@@ -67,7 +67,7 @@ All audio samples from [freesound.org](http://www.freesound.org), under Creative
 - [http://www.freesound.org/people/archeos/sounds/174725/](http://www.freesound.org/people/archeos/sounds/174725/)
 
 [![Creative Commons Licence][1]][2]  
-This work is licensed under a [Creative Commons Attribution 2.5 Australia License][2]. 
+This work is licensed under a [Creative Commons Attribution 3.0 Unported License][2]. 
 
-   [1]: http://i.creativecommons.org/l/by/2.5/au/88x31.png
-   [2]: http://creativecommons.org/licenses/by/2.5/au/deed.en_GB
+   [1]: http://i.creativecommons.org/l/by/3.0/88x31.png
+   [2]: http://creativecommons.org/licenses/by/3.0/
